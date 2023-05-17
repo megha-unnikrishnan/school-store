@@ -1,0 +1,233 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Admission form</title>
+
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="{% static 'fonts/material-icon/css/material-design-iconic-font.min.css' %}">
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        img { max-width: 249%; height: 900px; }
+        .submit{
+            background-color:darkorange;
+        }
+
+    </style>
+            	<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script language="javascript" type="text/javascript">
+    $(document).ready(function() {
+        //create arrays to store option and values
+        var commerce = [
+            {display: "BBA", value: "bba" },
+            {display: "BCOM", value: "bcom" },
+            {display: "ACCOUNTANCY", value: "accountancy" },
+            {display: "ECONOMICS", value: "economics" },
+            {display: "BA LLB", value: "ba llb" },
+
+        ];
+
+        var mathematics = [
+            {display: "BSC", value: "bsc" },
+            {display: "BTECH", value: "btech" },
+             {display: "GEOMETRY", value: "geometry" },
+             {display: "STATISTICS", value: "statistics" },
+             {display: "ANALYSIS", value: "analysis" }
+        ];
+
+         var biodiversity = [
+            {display: "MSC", value: "msc" },
+            {display: "MPHIL", value: "mphil" },
+            {display: "DPHIL", value: "dphil" },
+
+        ];
+
+         var accounting = [
+            {display: "FINANCIAL", value: "financial" },
+            {display: "FORENSIC", value: "forensic" },
+            {display: "LAW", value: "law" },
+            {display: "CA", value: "ca" },
+
+        ];
+
+        //If parent option is changed
+        $("#department").change(function() {
+            var parent = $(this).val(); //get option value from parent
+            switch(parent){ //using switch compare selected option and populate child
+                case 'commerce':
+                    $('#courses').attr('disabled', false);
+                    list(commerce);
+                    break;
+                case 'mathematics':
+                    $('#courses').attr('disabled', false);
+                    list(mathematics);
+                    break;
+                case 'biodiversity':
+                    $('#courses').attr('disabled', false);
+                    list(biodiversity);
+                    break;
+                case 'accounting':
+                    $('#courses').attr('disabled', false);
+                    list(accounting);
+                    break;
+                default: //default child option is blank
+                    $("#courses").html('');
+                    $('#courses').attr("disabled", true);
+                    break;
+            }
+        });
+
+        //function to populate child select box
+        function list(array_list) {
+            $("#courses").html(""); //reset child options
+            $(array_list).each(function (i) { //populate child options
+                $("#courses").append("<option value='" + array_list[i].value + "'>" + array_list[i].display + "</option>");
+            });
+        }
+    });
+
+        function myalert() {
+        alert("order is confirmed");
+    }
+    </script>
+
+</head>
+<body style="color:blue;overflow:hidden;background:#85C1E9" >
+<header>        ></header>
+
+<div class="container" style="bottom:109px;margin:0 99px;">
+  <h4 style="color:#85C1E9;font-size:40px;margin-left:1px;text-align:'center';">ADMISSION FORM</h4>
+      <form method="post"  class="sticky" >
+
+        {% csrf_token %}
+<!--          {{form}}-->
+  <div class="row">
+
+    <div class="col-lg-6">
+                          <div class="form-group">
+                                <label for="name">Name :</label>
+                                <input type="text" name="name" style="width:100%" id="name" autocomplete="on" required/>
+                            </div>
+
+                          <div class="form-group">
+                            <label for="birth_date">DOB :</label>
+                            <input type="date" name="dob" id="birth_date">
+                        </div>
+
+                        <div class="form-group">
+                                <label for="name">Age :</label>
+                                <input type="number" name="age" style="width:100%" id="age" required/>
+                        </div>
+
+                        <div class="form-radio">
+                            <label id="gender" for="gender" class="radio-label">Gender :</label>
+                            <div class="form-radio-item">
+                                <input type="radio" name="gender" id="male" checked value="male">
+                                <label for="male">Male</label>
+                                <span class="check"></span>
+                            </div>
+                            <div class="form-radio-item">
+                                <input type="radio" name="gender" id="female" value="female">
+                                <label for="female">Female</label>
+                                <span class="check"></span>
+                            </div>
+                        </div>
+                          <div class="form-group">
+                                <label for="mob">Mobile Number :</label>
+                                <input type="number" name="mob" style="width:100%" pattern="[7-9]{1}[0-9]{9}" id="mob" required/>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email ID :</label>
+                            <input type="email" name="email" id="email" autocomplete="on" />
+                        </div>
+    </div>
+
+    <div class="col-lg-6">
+                          <div class="form-group">
+                            <label for="address">Address :</label>
+                            <input type="text" name="address" id="address" autocomplete="on" required/>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="wrapper">
+                            <label for="department">Department :</label>
+                                 <select name="department" id="department">
+                                        <option value="Select:">Select:</option>
+                                        <option value="commerce">Commerce</option>
+                                        <option value="mathematics">Mathematics</option>
+                                        <option value="biodiversity">Biodiversity</option>
+                                        <option value="accounting">Accounting</option>
+                                 </select>
+                            <label for="courses">Courses :</label>
+                                 <select name="courses" id="courses" disabled="disabled">
+                                 </select>
+                        </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="purpose">Purpose :</label>
+                                 <select name="purposes" id="purpose">
+                                        <option value="forenquiry">For Enquiry</option>
+                                        <option value="placeorder">Place Order</option>
+                                        <option value="return">Return</option>
+                                 </select>
+                        </div>
+
+                             <label for="purpose">Materials provided :</label>
+                        <div class="form-check">
+
+                              <input class="form-check-input" type="checkbox" value="Note Book" id="book"  name="materials">
+                              <label class="form-check-label" for="book" style="color:black">
+                                Note Book
+                              </label>
+                        </div>
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" value="Pen" id="pen"  name="materials">
+                              <label class="form-check-label" for="pen" style="color:black">
+                                Pen
+                              </label>
+                            </div>
+                       <div class="form-check">
+
+                              <input class="form-check-input" type="checkbox" value="Pencil" id="pencil"  name="materials">
+                              <label class="form-check-label" for="pencil" style="color:black">
+                                Pencil
+                              </label>
+                       </div>
+                        <div class="form-check">
+
+                              <input class="form-check-input" type="checkbox" value="exam papers" id="papers"  name="materials">
+                              <label class="form-check-label" for="papers" style="color:black">
+                               Exam papers
+                              </label>
+                       </div>
+
+                        <div class="form-submit" style="margin-top:-31px;">
+
+
+                               <a href="{% url 'success' %}"><input type="submit" value="Submit Form" class="submit" name="submit" id="sub" /></a>
+<!--                            <a class="btn btn-success" href="" disabled>Submit Form</a>-->
+                            <input type="button" value="LogOut" class="submit" name="submit" id="logout" />
+                        </div>
+                    <div class="form-group">
+                           {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
+    {% endfor %}
+</ul>
+{% endif %}
+                 </div>
+
+    </div>
+  </div>
+      </form>
+</div>
+</body>
+</html>
